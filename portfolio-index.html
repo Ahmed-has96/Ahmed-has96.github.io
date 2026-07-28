@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ahmed Hassan — Frontend- og mobilutvikler</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2F0E9;
+    --paper-alt:#EAE7DC;
+    --ink:#181B1D;
+    --ink-soft:#5C6165;
+    --line:#D8D4C8;
+    --blue:#2B5875;
+    --blue-soft:#E4ECF0;
+    --amber:#E8A93C;
+    --amber-soft:#FAF0DC;
+    --green:#3E7D5A;
+    --card:#FCFBF8;
+    --shadow: 0 1px 2px rgba(24,27,29,0.04), 0 8px 24px rgba(24,27,29,0.06);
+  }
+  *{box-sizing:border-box; scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.6;
+  }
+  ::selection{background:var(--amber); color:var(--ink);}
+  a{color:var(--blue);}
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px;}
+
+  /* Coordinate tag */
+  .coord{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.06em;
+    color:var(--ink-soft);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .coord::before{content:"◎";color:var(--blue);}
+
+  /* Header / nav */
+  header{
+    position:sticky; top:0; z-index:20;
+    background:rgba(242,240,233,0.9);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    max-width:920px;margin:0 auto;padding:14px 24px;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  nav .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;}
+  nav ul{list-style:none;display:flex;gap:22px;margin:0;padding:0;}
+  nav a{color:var(--ink);text-decoration:none;font-size:14px;font-weight:500;}
+  nav a:hover{color:var(--blue);}
+
+  /* Hero */
+  .hero{padding:72px 0 56px; border-bottom:1px solid var(--line);}
+  .hero .coord{margin-bottom:18px;}
+  .hero h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(36px,6vw,58px);
+    line-height:1.05;
+    margin:0 0 14px;
+    letter-spacing:-0.02em;
+  }
+  .hero h1 span{color:var(--blue);}
+  .hero .role{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:15px;
+    color:var(--ink-soft);
+    margin-bottom:22px;
+  }
+  .hero p.lede{max-width:560px; font-size:17px; color:#3a3f42; margin-bottom:30px;}
+  .hero .actions{display:flex; gap:12px; flex-wrap:wrap;}
+  .btn{
+    font-family:'IBM Plex Sans',sans-serif;
+    font-weight:600; font-size:14px;
+    padding:11px 20px; border-radius:6px;
+    text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    border:1.5px solid var(--ink);
+    transition:transform .12s ease, opacity .15s ease;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn.primary{background:var(--ink); color:var(--paper);}
+  .btn.ghost{background:transparent; color:var(--ink);}
+
+  section{padding:64px 0;}
+  section.alt{background:var(--paper-alt);}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--blue); margin-bottom:10px; font-weight:600;
+  }
+  h2{font-family:'Space Grotesk',sans-serif; font-size:28px; font-weight:600; margin:0 0 28px;}
+
+  /* About */
+  .about p{max-width:640px; font-size:16px; color:#2d3134;}
+
+  /* Grade bar - signature element, reused across skills + featured project */
+  .grade-row{display:flex; align-items:center; gap:12px; margin-bottom:11px;}
+  .grade-label{font-family:'IBM Plex Mono',monospace; font-size:13px; width:150px; flex-shrink:0;}
+  .grade-track{flex:1; display:flex; gap:3px;}
+  .grade-seg{height:9px; flex:1; background:var(--line); border-radius:2px;}
+  .grade-seg.on{background:var(--blue);}
+  .grade-seg.on.amber{background:var(--amber);}
+
+  /* Featured project */
+  .featured{
+    background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:36px; box-shadow:var(--shadow); position:relative; overflow:hidden;
+  }
+  .featured::before{
+    content:""; position:absolute; top:0; right:0; width:160px; height:160px;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 18px, var(--line) 18px, var(--line) 19px),
+      repeating-linear-gradient(90deg, transparent, transparent 18px, var(--line) 18px, var(--line) 19px);
+    opacity:0.5; pointer-events:none;
+  }
+  .stamp-grade{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:13px;
+    background:var(--green); color:#fff; padding:6px 14px; border-radius:5px;
+    margin-bottom:18px;
+  }
+  .featured h3{font-family:'Space Grotesk',sans-serif; font-size:24px; margin:0 0 6px;}
+  .featured .meta{font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--ink-soft); margin-bottom:18px;}
+  .featured p{max-width:600px; margin-bottom:16px; color:#2d3134;}
+  .featured ul{margin:0 0 20px; padding-left:20px; color:#2d3134;}
+  .featured ul li{margin-bottom:6px;}
+  .tags{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px;}
+  .tag{
+    font-family:'IBM Plex Mono',monospace; font-size:12px;
+    background:var(--blue-soft); color:var(--blue); padding:5px 10px; border-radius:4px;
+  }
+  .confidential-note{
+    font-size:13px; color:var(--ink-soft); border-left:3px solid var(--amber);
+    padding:10px 14px; background:var(--amber-soft); border-radius:0 6px 6px 0;
+  }
+
+  /* Project grid */
+  .grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:18px;}
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:10px;
+    padding:22px; box-shadow:var(--shadow);
+  }
+  .card h4{font-family:'Space Grotesk',sans-serif; font-size:17px; margin:0 0 8px;}
+  .card p{font-size:14px; color:var(--ink-soft); margin:0 0 14px;}
+  .card a{font-family:'IBM Plex Mono',monospace; font-size:12.5px; text-decoration:none; font-weight:600;}
+  .card a:hover{text-decoration:underline;}
+
+  /* Timeline */
+  .timeline{border-left:2px solid var(--line); padding-left:26px; margin-left:6px;}
+  .tl-item{position:relative; margin-bottom:32px;}
+  .tl-item:last-child{margin-bottom:0;}
+  .tl-item::before{
+    content:""; position:absolute; left:-32px; top:4px; width:10px; height:10px;
+    border-radius:50%; background:var(--blue); border:2px solid var(--paper);
+  }
+  .tl-item .when{font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-soft); margin-bottom:3px;}
+  .tl-item h4{font-family:'Space Grotesk',sans-serif; font-size:17px; margin:0 0 3px;}
+  .tl-item .org{font-size:14px; color:var(--blue); margin-bottom:8px; font-weight:500;}
+  .tl-item p{font-size:14px; color:#2d3134; margin:0; max-width:560px;}
+
+  /* Education */
+  .edu-card{
+    background:var(--card); border:1px solid var(--line); border-radius:10px;
+    padding:28px; box-shadow:var(--shadow);
+  }
+  .edu-card h4{font-family:'Space Grotesk',sans-serif; font-size:19px; margin:0 0 4px;}
+  .edu-card .org{color:var(--ink-soft); font-size:14px; margin-bottom:16px;}
+  .grades{display:flex; flex-wrap:wrap; gap:8px;}
+  .grade-pill{
+    font-family:'IBM Plex Mono',monospace; font-size:12.5px;
+    border:1px solid var(--line); border-radius:6px; padding:6px 10px;
+    display:flex; gap:6px; align-items:center;
+  }
+  .grade-pill b{color:var(--green);}
+
+  footer{
+    padding:48px 0 60px; text-align:center;
+    border-top:1px solid var(--line);
+  }
+  footer .coord{margin-bottom:14px;}
+  footer .links{display:flex; gap:22px; justify-content:center; margin-bottom:18px; flex-wrap:wrap;}
+  footer .links a{color:var(--ink); text-decoration:none; font-weight:600; font-size:14px;}
+  footer .links a:hover{color:var(--blue);}
+  footer .copy{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-soft);}
+
+  @media (max-width:640px){
+    nav ul{gap:14px;}
+    nav ul li:nth-child(4){display:none;}
+    section{padding:48px 0;}
+    .featured{padding:24px;}
+    .grade-label{width:110px; font-size:12px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">Ahmed Hassan</div>
+    <ul>
+      <li><a href="#om">Om meg</a></li>
+      <li><a href="#prosjekter">Prosjekter</a></li>
+      <li><a href="#erfaring">Erfaring</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="coord">59.9139°N, 10.7522°E — Oslo, Norge</div>
+    <h1>Bygger grensesnitt<br>som gjør <span>komplekse data</span><br>lette å forstå.</h1>
+    <div class="role">Frontend- og mobilutvikler · React / TypeScript / .NET</div>
+    <p class="lede">Nyutdannet utvikler med bachelor i frontend- og mobilutvikling. Jobber i skjæringspunktet mellom data, kart og grensesnitt — sist i et prosjekt som omsatte LiDAR- og veidata til beslutningsstøtte for vedlikehold.</p>
+    <div class="actions">
+      <a class="btn primary" href="#prosjekter">Se prosjekter</a>
+      <a class="btn ghost" href="mailto:Ahmed.yah2907@gmail.com">Kontakt meg</a>
+    </div>
+  </div>
+</section>
+
+<section id="om">
+  <div class="wrap about">
+    <div class="eyebrow">Om meg</div>
+    <h2>Fra kode til beslutning</h2>
+    <p>Jeg bygger stabile og brukervennlige løsninger for web og mobil, med hovedvekt på React og TypeScript. Jeg trives i skjæringspunktet mellom frontend og backend, og er opptatt av struktur, tilgjengelighet og at komplekse data blir enkle å lese for den som faktisk skal bruke løsningen.</p>
+    <p>Ved siden av utviklingsarbeidet jobber jeg som togfører hos Sporveien — en rolle som handler om presisjon, ro under press og ansvar for at ting fungerer som de skal. Den samme tankegangen tar jeg med inn i koden jeg skriver.</p>
+
+    <div style="margin-top:36px;">
+      <div class="grade-row"><span class="grade-label">React / TypeScript</span><div class="grade-track"><div class="grade-seg on"></div><div class="grade-seg on"></div><div class="grade-seg on"></div><div class="grade-seg on"></div><div class="grade-seg on"></div></div></div>
+      <div class="grade-row"><span class="grade-label">C# / .NET</span><div class="grade-track"><div class="grade-seg on"></div><div class="grade-seg on"></div><div class="grade-seg on"></div><div class="grade-seg"></div><div class="grade-seg"></div></div></div>
+      <div class="grade-row"><span class="grade-label">Swift / SwiftUI</span><div class="grade-track"><div class="grade-seg on amber"></div><div class="grade-seg on amber"></div><div class="grade-seg on amber"></div><div class="grade-seg"></div><div class="grade-seg"></div></div></div>
+      <div class="grade-row"><span class="grade-label">Kotlin / Compose</span><div class="grade-track"><div class="grade-seg on amber"></div><div class="grade-seg on amber"></div><div class="grade-seg on amber"></div><div class="grade-seg"></div><div class="grade-seg"></div></div></div>
+      <div class="grade-row"><span class="grade-label">SQL / API-design</span><div class="grade-track"><div class="grade-seg on"></div><div class="grade-seg on"></div><div class="grade-seg on"></div><div class="grade-seg on"></div><div class="grade-seg"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="prosjekter">
+  <div class="wrap">
+    <div class="eyebrow">Hovedprosjekt</div>
+    <h2>Utvalgt arbeid</h2>
+
+    <div class="featured">
+      <div class="stamp-grade">TILSTANDSGRAD · A</div>
+      <h3>Huldra — vegskadedeteksjon</h3>
+      <div class="meta">Bacheloroppgave · 2025 · i samarbeid med Triona AS</div>
+      <p>Et system som prosesserer LiDAR- og NVDB-data fra målebiler og omsetter det til en konkret tilstandsgrad (1–5) for veidekket — presentert i et interaktivt, fargekodet kart som gjør det enkelt for vedlikeholdsansvarlige å prioritere riktig strekning til riktig tid.</p>
+      <ul>
+        <li>Utviklet et .NET REST API som prosesserer store mengder LiDAR- og NVDB-data</li>
+        <li>Beregnet tilstandsgrad fra 1–5 og eksponerte resultatene som GeoJSON</li>
+        <li>Bygget et interaktivt kart i React/TypeScript med OpenLayers for å visualisere resultatene</li>
+        <li>Bidro til bedre beslutningsgrunnlag for vedlikeholdsplanlegging</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">OpenLayers</span>
+        <span class="tag">C# / .NET</span><span class="tag">REST API</span><span class="tag">GeoJSON</span><span class="tag">NVDB / LiDAR</span>
+      </div>
+      <div class="confidential-note">Utviklet for og eid av Triona AS — kildekoden er konfidensiell, men jeg diskuterer gjerne arkitektur og løsning i detalj.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Sideprosjekter</div>
+    <h2>Bygget på egen hånd</h2>
+    <div class="grid">
+      <div class="card">
+        <h4>FakeStore Android App</h4>
+        <p>Android-app i Kotlin med MVVM-arkitektur mot FakeStore API.</p>
+        <a href="https://github.com/Ahmed-has96/FakeStore-Android-App" target="_blank">github.com/Ahmed-has96/FakeStore-Android-App →</a>
+      </div>
+      <div class="card">
+        <h4>F1SpecialEvent</h4>
+        <p>Webapp som kombinerer React-frontend med .NET-backend for løpsinformasjon.</p>
+        <a href="https://github.com/Ahmed-has96/F1SpecialEvent" target="_blank">github.com/Ahmed-has96/F1SpecialEvent →</a>
+      </div>
+      <div class="card">
+        <h4>CryptoTracker App</h4>
+        <p>iOS-app i SwiftUI som følger kryptovalutapriser via CoinLore API.</p>
+        <a href="https://github.com/Ahmed-has96/CryptoTrackerApp" target="_blank">github.com/Ahmed-has96/CryptoTrackerApp →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="erfaring">
+  <div class="wrap">
+    <div class="eyebrow">Erfaring</div>
+    <h2>Arbeidserfaring</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="when">Jan 2024 — nåværende</div>
+        <h4>Togfører</h4>
+        <div class="org">Sporveien</div>
+        <p>Trygg og punktlig passasjertransport med høyt fokus på sikkerhet, presis kommunikasjon og tett samarbeid med trafikkledelse. Selvstendig rolle med rolig håndtering av avvik.</p>
+      </div>
+      <div class="tl-item">
+        <div class="when">Sep 2024 — Jul 2025</div>
+        <h4>Frontendutvikler (oppdrag)</h4>
+        <div class="org">Lucio AS</div>
+        <p>Bygget og videreutviklet frontend i React og TypeScript. Forbedret navigasjon, struktur og gjenbrukbare komponenter med fokus på tilgjengelighet og kodekvalitet.</p>
+      </div>
+      <div class="tl-item">
+        <div class="when">Sep 2019 — Jun 2022</div>
+        <h4>Miljøarbeider</h4>
+        <div class="org">Milepælen Ungdomshjem</div>
+        <p>Tilrettela for en trygg og strukturert hverdag, oppfølging etter tiltaksplaner og tverrfaglig samarbeid.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Utdanning</div>
+    <h2>Bakgrunn</h2>
+    <div class="edu-card">
+      <h4>Bachelor i informasjonsteknologi — Frontend- og mobilutvikling</h4>
+      <div class="org">Høyskolen Kristiania, Oslo · 2022–2025</div>
+      <div class="grades">
+        <span class="grade-pill">Bacheloroppgave <b>A</b></span>
+        <span class="grade-pill">Webutvikling <b>A</b></span>
+        <span class="grade-pill">Undersøkelsesmetoder <b>A</b></span>
+        <span class="grade-pill">iOS-programmering <b>A</b></span>
+        <span class="grade-pill">Python <b>A</b></span>
+        <span class="grade-pill">Interaksjonsdesign <b>B</b></span>
+        <span class="grade-pill">Android-programmering <b>B</b></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="kontakt">
+  <div class="wrap">
+    <div class="coord">Åpen for roller i og rundt Oslo</div>
+    <div class="links">
+      <a href="mailto:Ahmed.yah2907@gmail.com">E-post</a>
+      <a href="https://github.com/Ahmed-has96" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/ahmed-yas2907" target="_blank">LinkedIn</a>
+    </div>
+    <div class="copy">Ahmed Hassan · Sist oppdatert 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>
